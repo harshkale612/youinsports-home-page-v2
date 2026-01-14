@@ -73,7 +73,29 @@ const Navbar = () => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
-        <img src={logo} alt="UinSports Logo" style={{ height: '80px' }} />
+        <Box
+          component="img"
+          src={logo}
+          alt="UinSports Logo"
+          sx={{
+            height: { xs: 36, sm: 40 },
+            width: 'auto',
+            display: 'block',
+            objectFit: 'contain',
+            filter:
+              theme.palette.mode === 'dark'
+                ? 'drop-shadow(0 0 10px rgba(15,23,42,0.8))'
+                : 'drop-shadow(0 0 4px rgba(15,23,42,0.15))',
+            transition: 'transform 0.2s ease, filter 0.2s ease',
+            '&:hover': {
+              transform: 'translateY(-1px) scale(1.02)',
+              filter:
+                theme.palette.mode === 'dark'
+                  ? 'drop-shadow(0 0 14px rgba(15,23,42,0.95))'
+                  : 'drop-shadow(0 0 8px rgba(15,23,42,0.25))',
+            },
+          }}
+        />
         <IconButton onClick={handleDrawerToggle}>
           <CloseIcon />
         </IconButton>
@@ -222,7 +244,29 @@ const Navbar = () => {
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 3 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-              <img src={logo} alt="UinSports Logo" style={{ height: '80px' }} />
+              <Box
+                component="img"
+                src={logo}
+                alt="UinSports Logo"
+                sx={{
+                  height: { xs: 32, sm: 38, md: 44 },
+                  width: 'auto',
+                  display: 'block',
+                  objectFit: 'contain',
+                  filter:
+                    theme.palette.mode === 'dark'
+                      ? 'drop-shadow(0 0 10px rgba(15,23,42,0.8))'
+                      : 'drop-shadow(0 0 4px rgba(15,23,42,0.15))',
+                  transition: 'transform 0.2s ease, filter 0.2s ease',
+                  '&:hover': {
+                    transform: 'translateY(-1px) scale(1.02)',
+                    filter:
+                      theme.palette.mode === 'dark'
+                        ? 'drop-shadow(0 0 14px rgba(15,23,42,0.95))'
+                        : 'drop-shadow(0 0 8px rgba(15,23,42,0.25))',
+                  },
+                }}
+              />
             </Link>
           </Box>
 
