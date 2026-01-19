@@ -217,46 +217,46 @@ const processSteps = [
 //   }
 // ];
 
-// const pricingPlans = [
-//   {
-//     name: "Starter",
-//     price: "Free",
-//     description: "Perfect for small events and new organizers",
-//     features: [
-//       "Up to 50 participants",
-//       "Basic event management",
-//       "Email support",
-//       "Standard templates"
-//     ],
-//     popular: false
-//   },
-//   {
-//     name: "Professional",
-//     price: "$99/month",
-//     description: "Ideal for regular event organizers",
-//     features: [
-//       "Up to 500 participants",
-//       "Advanced analytics",
-//       "Sponsor matching",
-//       "Priority support",
-//       "Custom branding"
-//     ],
-//     popular: true
-//   },
-//   {
-//     name: "Enterprise",
-//     price: "Custom",
-//     description: "For large organizations and major events",
-//     features: [
-//       "Unlimited participants",
-//       "White-label solution",
-//       "Dedicated account manager",
-//       "Custom integrations",
-//       "24/7 phone support"
-//     ],
-//     popular: false
-//   }
-// ];
+const pricingPlans = [
+  {
+    name: "Starter",
+    price: "Free",
+    description: "Perfect for small events and new organizers",
+    features: [
+      "Up to 50 participants",
+      "Basic event management",
+      "Email support",
+      "Standard templates"
+    ],
+    popular: false
+  },
+  {
+    name: "Professional",
+    price: "$99/month",
+    description: "Ideal for regular event organizers",
+    features: [
+      "Up to 500 participants",
+      "Advanced analytics",
+      "Sponsor matching",
+      "Priority support",
+      "Custom branding"
+    ],
+    popular: true
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    description: "For large organizations and major events",
+    features: [
+      "Unlimited participants",
+      "White-label solution",
+      "Dedicated account manager",
+      "Custom integrations",
+      "24/7 phone support"
+    ],
+    popular: false
+  }
+];
 
 const Organizers = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -551,7 +551,7 @@ const Organizers = () => {
         )} */}
 
         {/* Pricing Tab */}
-        {/* {tabValue === 3 && (
+        {tabValue === 3 && (
           <Box>
             <Typography variant="h4" component="h2" gutterBottom textAlign="center" sx={{ mb: 6 }}>
               Choose Your <span style={{ color: '#667eea' }}>Plan</span>
@@ -614,7 +614,7 @@ const Organizers = () => {
               ))}
             </Grid>
           </Box>
-        )} */}
+        )}
 
         {/* FAQ Section */}
         <Box sx={{ mt: 8 }}>

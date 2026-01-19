@@ -23,7 +23,7 @@ const Footer = () => {
       { name: 'Home', href: '/' },
       { name: 'About Us', href: '/about' },
       { name: 'Community', href: '/community' },
-      // { name: 'Plans & Pricing', href: '/plans' },
+      { name: 'Plans & Pricing', href: '/plans' },
     ],
     Support: [
       // { name: 'Support Athletes', href: '/support' },

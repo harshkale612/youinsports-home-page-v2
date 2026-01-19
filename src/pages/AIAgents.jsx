@@ -895,7 +895,7 @@ const AIAgents = () => {
           )}
 
           {/* Pricing Tab */}
-          {activeTab === 3 && (
+          {/* {activeTab === 3 && (
             <Box sx={{ maxWidth: '1024px', mx: 'auto' }}>
               <Box sx={{ textAlign: 'center', mb: 4 }}>
                 <Typography
@@ -1110,7 +1110,7 @@ const AIAgents = () => {
                 </Grid>
               </Grid>
             </Box>
-          )}
+          )} */}
         </Container>
       </Box>
 

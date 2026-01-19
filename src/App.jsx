@@ -37,9 +37,8 @@ function App() {
               {/* <Route path="/support" component={Support} /> */}
               <Route path="/organizers" component={Organizers} />
               {/* <Route path="/tracker" component={Tracker} /> */}
-              {/* <Route path="/video-analysis" component={VideoAnalysis} />
-              <Route path="/ai-agents" component={AIAgents} />
-              <Route path="/plans" component={Plans} /> */}
+              <Route path="/plans" component={Plans} />
+
               <Route path="/faq" component={FAQ} />
               <Route path="/contact" component={Contact} />
               <Route path="/privacy" component={Privacy} />
