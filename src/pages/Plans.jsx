@@ -50,7 +50,7 @@ const Plans = () => {
     },
     {
       title: 'Pro',
-      price: billingCycle === 'monthly' ? '19' : '15',
+      price: billingCycle === 'monthly' ? '1,499' : '1,199',
       description: 'Advanced tools to accelerate your athletic career.',
       features: [
         'Everything in Starter',
@@ -65,7 +65,7 @@ const Plans = () => {
     },
     {
       title: 'Elite',
-      price: billingCycle === 'monthly' ? '49' : '39',
+      price: billingCycle === 'monthly' ? '3,999' : '3,199',
       description: 'Full-scale support for top-tier competitive athletes.',
       features: [
         'Everything in Pro',
@@ -236,7 +236,7 @@ const Plans = () => {
                       </Typography>
                       <Box display="flex" alignItems="baseline" mb={2}>
                         <Typography variant="h2" fontWeight={800} color="primary.main">
-                          ${plan.price}
+                          ₹{plan.price}
                         </Typography>
                         <Typography variant="subtitle1" color="text.secondary" ml={1}>
                           /{billingCycle === 'monthly' ? 'mo' : 'mo'}
