@@ -292,42 +292,93 @@ const Plans = () => {
             A detailed breakdown of everything you'll get in each plan.
           </Typography>
 
-          <TableContainer component={Paper} sx={{ borderRadius: 4, overflow: 'hidden', border: `1px solid ${theme.palette.divider}` }}>
-            <Table>
-              <TableHead sx={{ bgcolor: theme.palette.mode === 'light' ? '#f8fafc' : '#1e293b' }}>
-                <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>Features</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 700 }}>Starter</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 700 }}>Pro</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 700 }}>Elite</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {featuresComparison.map((row) => (
-                  <TableRow key={row.feature} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell component="th" scope="row" sx={{ fontWeight: 500 }}>
-                      {row.feature}
+          <Box sx={{ position: 'relative', overflow: 'hidden', borderRadius: 0, border: `1px solid ${theme.palette.divider}` }}>
+            <TableContainer component={Paper} sx={{
+              borderRadius: 0,
+              boxShadow: 'none',
+              background: 'transparent',
+              overflowX: 'auto',
+              '::-webkit-scrollbar': { height: 6 },
+              '::-webkit-scrollbar-track': { background: 'transparent' },
+              '::-webkit-scrollbar-thumb': { background: theme.palette.divider, borderRadius: 0 }
+            }}>
+              <Table sx={{ minWidth: { xs: 600, md: '100%' } }}>
+                <TableHead sx={{ bgcolor: theme.palette.mode === 'light' ? '#f8fafc' : '#0f172a' }}>
+                  <TableRow>
+                    <TableCell sx={{
+                      fontWeight: 700,
+                      position: 'sticky',
+                      left: 0,
+                      bgcolor: theme.palette.mode === 'light' ? '#f8fafc' : '#0f172a',
+                      zIndex: 10,
+                      borderBottom: `1px solid ${theme.palette.divider}`,
+                      minWidth: 160
+                    }}>
+                      Features
                     </TableCell>
-                    <TableCell align="center">
-                      {typeof row.starter === 'boolean' ? (
-                        row.starter ? <MdCheckCircle color={theme.palette.primary.main} size={20} /> : '—'
-                      ) : row.starter}
-                    </TableCell>
-                    <TableCell align="center">
-                      {typeof row.pro === 'boolean' ? (
-                        row.pro ? <MdCheckCircle color={theme.palette.primary.main} size={20} /> : '—'
-                      ) : row.pro}
-                    </TableCell>
-                    <TableCell align="center">
-                      {typeof row.elite === 'boolean' ? (
-                        row.elite ? <MdCheckCircle color={theme.palette.primary.main} size={20} /> : '—'
-                      ) : row.elite}
-                    </TableCell>
+                    <TableCell align="center" sx={{ fontWeight: 800, color: 'text.secondary', fontSize: '0.9rem' }}>STARTER</TableCell>
+                    <TableCell align="center" sx={{ fontWeight: 800, color: 'primary.main', fontSize: '1.1rem' }}>PRO</TableCell>
+                    <TableCell align="center" sx={{ fontWeight: 800, color: 'secondary.main', fontSize: '0.9rem' }}>ELITE</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {featuresComparison.map((row, index) => (
+                    <TableRow
+                      key={row.feature}
+                      sx={{
+                        bgcolor: index % 2 === 0 ? 'transparent' : (theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)'),
+                        '&:hover': { bgcolor: theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)' },
+                        '&:last-child td, &:last-child th': { border: 0 }
+                      }}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        sx={{
+                          fontWeight: 600,
+                          position: 'sticky',
+                          left: 0,
+                          bgcolor: index % 2 === 0
+                            ? (theme.palette.mode === 'light' ? '#ffffff' : '#1e293b')
+                            : (theme.palette.mode === 'light' ? '#fcfcfc' : '#1e293b'), // Fallback color matching row
+                          bgcolor: theme.palette.mode === 'light' ? '#ffffff' : '#0b1121', // Actually better to use solid background for sticky
+                          borderRight: `1px solid ${theme.palette.divider}`,
+                          zIndex: 9
+                        }}
+                      >
+                        {/* Ensure background matches visual row striping if possible, but solid is safer for sticky */}
+                        <Box sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          bgcolor: index % 2 === 0 ? 'background.paper' : (theme.palette.mode === 'light' ? '#f8fafc' : '#111827'),
+                          zIndex: -1
+                        }} />
+                        <Box sx={{ position: 'relative' }}>{row.feature}</Box>
+                      </TableCell>
+                      <TableCell align="center" sx={{ color: 'text.secondary' }}>
+                        {typeof row.starter === 'boolean' ? (
+                          row.starter ? <MdCheckCircle color={theme.palette.text.disabled} size={22} /> : <Typography color="text.disabled">—</Typography>
+                        ) : <Typography fontWeight={500}>{row.starter}</Typography>}
+                      </TableCell>
+                      <TableCell align="center" sx={{ bgcolor: theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.04)' : 'rgba(65, 139, 202, 0.1)' }}>
+                        {typeof row.pro === 'boolean' ? (
+                          row.pro ? <MdCheckCircle color={theme.palette.primary.main} size={24} /> : <Typography color="text.disabled">—</Typography>
+                        ) : <Typography fontWeight={700} color="primary.main">{row.pro}</Typography>}
+                      </TableCell>
+                      <TableCell align="center">
+                        {typeof row.elite === 'boolean' ? (
+                          row.elite ? <MdCheckCircle color={theme.palette.secondary.main} size={22} /> : <Typography color="text.disabled">—</Typography>
+                        ) : <Typography fontWeight={500}>{row.elite}</Typography>}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </Box>
 
         {/* FAQ Section */}
