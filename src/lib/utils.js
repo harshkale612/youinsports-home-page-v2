@@ -146,3 +146,128 @@ export function copyToClipboard(text) {
     });
   }
 }
+
+// Currency mapping: country code to currency code
+const COUNTRY_CURRENCY_MAP = {
+  'IN': 'INR', // India - Rupee
+  'US': 'USD', // United States - Dollar
+  'CA': 'CAD', // Canada - Dollar
+  'GB': 'GBP', // United Kingdom - Pound
+  'AU': 'AUD', // Australia - Dollar
+  'EU': 'EUR', // European Union - Euro
+  'JP': 'JPY', // Japan - Yen
+  'CN': 'CNY', // China - Yuan
+  'BR': 'BRL', // Brazil - Real
+  'MX': 'MXN', // Mexico - Peso
+  'SG': 'SGD', // Singapore - Dollar
+  'AE': 'AED', // UAE - Dirham
+  'SA': 'SAR', // Saudi Arabia - Riyal
+  'ZA': 'ZAR', // South Africa - Rand
+  'NZ': 'NZD', // New Zealand - Dollar
+};
+
+// Currency symbols
+const CURRENCY_SYMBOLS = {
+  'INR': '₹',
+  'USD': '$',
+  'CAD': 'CA$',
+  'GBP': '£',
+  'AUD': 'A$',
+  'EUR': '€',
+  'JPY': '¥',
+  'CNY': '¥',
+  'BRL': 'R$',
+  'MXN': '$',
+  'SGD': 'S$',
+  'AED': 'د.إ',
+  'SAR': '﷼',
+  'ZAR': 'R',
+  'NZD': 'NZ$',
+};
+
+// Exchange rates relative to CAD (base currency)
+// These are approximate rates - in production, fetch from an API
+const EXCHANGE_RATES = {
+  'CAD': 1.0,
+  'USD': 0.73,
+  'INR': 60.5,
+  'GBP': 0.58,
+  'AUD': 1.10,
+  'EUR': 0.68,
+  'JPY': 108.5,
+  'CNY': 5.2,
+  'BRL': 3.65,
+  'MXN': 12.5,
+  'SGD': 0.98,
+  'AED': 2.68,
+  'SAR': 2.74,
+  'ZAR': 13.5,
+  'NZD': 1.20,
+};
+
+// Get user's country from IP address
+export async function getUserCountry() {
+  try {
+    // Try to get from localStorage first (cache for 24 hours)
+    const cached = localStorage.getItem('userCountry');
+    const cachedTime = localStorage.getItem('userCountryTime');
+    
+    if (cached && cachedTime) {
+      const timeDiff = Date.now() - parseInt(cachedTime);
+      // Cache for 24 hours
+      if (timeDiff < 24 * 60 * 60 * 1000) {
+        return cached;
+      }
+    }
+
+    // Fetch from IP geolocation service
+    const response = await fetch('https://ipapi.co/json/');
+    if (!response.ok) {
+      throw new Error('Failed to fetch location');
+    }
+    
+    const data = await response.json();
+    const countryCode = data.country_code || 'CA';
+    
+    // Cache the result
+    localStorage.setItem('userCountry', countryCode);
+    localStorage.setItem('userCountryTime', Date.now().toString());
+    
+    return countryCode;
+  } catch (error) {
+    console.error('Error fetching user country:', error);
+    // Fallback to Canada
+    return 'CA';
+  }
+}
+
+// Get currency code from country code
+export function getCurrencyFromCountry(countryCode) {
+  return COUNTRY_CURRENCY_MAP[countryCode] || 'CAD';
+}
+
+// Convert price from CAD to target currency
+export function convertPrice(priceInCAD, targetCurrency) {
+  const rate = EXCHANGE_RATES[targetCurrency] || 1.0;
+  return (parseFloat(priceInCAD) * rate).toFixed(2);
+}
+
+// Format price with currency symbol
+export function formatPrice(price, currencyCode) {
+  const symbol = CURRENCY_SYMBOLS[currencyCode] || currencyCode;
+  const formattedPrice = parseFloat(price).toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return `${symbol}${formattedPrice}`;
+}
+
+// Get currency info (code, symbol, and formatted price)
+export function getCurrencyInfo(countryCode) {
+  const currencyCode = getCurrencyFromCountry(countryCode);
+  const symbol = CURRENCY_SYMBOLS[currencyCode] || currencyCode;
+  return {
+    code: currencyCode,
+    symbol: symbol,
+  };
+}
