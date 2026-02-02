@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { FaFacebook as Facebook, FaInstagram as Instagram, FaTwitter as Twitter, } from 'react-icons/fa';
 import { MdFavorite as Favorite } from 'react-icons/md';
-import logo from '../../public/uinsports-logo.png';
+const logo = '/uinsports-logo.png';
 import { BsYoutube } from 'react-icons/bs';
 
 const Footer = () => {

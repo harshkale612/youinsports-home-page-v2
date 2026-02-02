@@ -28,7 +28,7 @@ import {
   MdOutlineDarkMode,
 } from 'react-icons/md';
 import { useColorMode } from '../theme/ThemeContext';
-import logo from '../../public/uinsports-logo.png';
+const logo = '/uinsports-logo.png';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
