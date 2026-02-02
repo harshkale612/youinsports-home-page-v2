@@ -246,43 +246,10 @@ export function getCurrencyFromCountry(countryCode) {
   return COUNTRY_CURRENCY_MAP[countryCode] || 'CAD';
 }
 
-// Apply charm pricing (e.g. 4.99, 299)
-function applyCharmPricing(price, currencyCode) {
-  const numericPrice = parseFloat(price);
-
-  // High denomination currencies (no decimals usually)
-  const highDenomCurrencies = ['INR', 'JPY', 'KRW', 'VND', 'IDR', 'HUF'];
-
-  if (highDenomCurrencies.includes(currencyCode)) {
-    // Round to nearest 10, then subtract 1 to get ends in 9
-    // e.g. 302 -> 299, 308 -> 309, 1250 -> 1249
-    // Logic: Round to nearest prominent price point
-
-    if (numericPrice < 100) {
-      return Math.round(numericPrice); // Keep small numbers exact-ish
-    } else if (numericPrice < 1000) {
-      // e.g. 302.5 -> 299
-      return Math.round(numericPrice / 10) * 10 - 1;
-    } else {
-      // e.g. 1250 -> 1299 or 1249? Let's go with ending in 99 usually
-      return Math.round(numericPrice / 100) * 100 - 1;
-    }
-  }
-
-  // Standard currencies (USD, EUR, CAD, etc.)
-  // Round to nearest .99
-  const integerPart = Math.floor(numericPrice);
-  return (integerPart + 0.99).toFixed(2);
-}
-
 // Convert price from CAD to target currency
 export function convertPrice(priceInCAD, targetCurrency) {
   const rate = EXCHANGE_RATES[targetCurrency] || 1.0;
-  // If staying in CAD, just return original (formatted to 2 decimal places if needed, but usually string)
-  if (targetCurrency === 'CAD') return parseFloat(priceInCAD).toFixed(2);
-
-  const convertedRaw = parseFloat(priceInCAD) * rate;
-  return applyCharmPricing(convertedRaw, targetCurrency);
+  return (parseFloat(priceInCAD) * rate).toFixed(2);
 }
 
 // Format price with currency symbol
