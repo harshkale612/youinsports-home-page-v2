@@ -34,7 +34,7 @@ export function debounce(func, wait) {
 
 export function throttle(func, limit) {
   let inThrottle;
-  return function() {
+  return function () {
     const args = arguments;
     const context = this;
     if (!inThrottle) {
@@ -68,11 +68,11 @@ export function calculateAge(birthDate) {
   const birth = new Date(birthDate);
   let age = today.getFullYear() - birth.getFullYear();
   const monthDiff = today.getMonth() - birth.getMonth();
-  
+
   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
     age--;
   }
-  
+
   return age;
 }
 
@@ -82,7 +82,7 @@ export function formatDate(date, options = {}) {
     month: 'long',
     day: 'numeric',
   };
-  
+
   return new Intl.DateTimeFormat('en-US', { ...defaultOptions, ...options }).format(new Date(date));
 }
 
@@ -90,7 +90,7 @@ export function getTimeAgo(date) {
   const now = new Date();
   const past = new Date(date);
   const diffInSeconds = Math.floor((now - past) / 1000);
-  
+
   if (diffInSeconds < 60) return 'Just now';
   if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
   if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
@@ -189,20 +189,20 @@ const CURRENCY_SYMBOLS = {
 // These are approximate rates - in production, fetch from an API
 const EXCHANGE_RATES = {
   'CAD': 1.0,
-  'USD': 0.73,
-  'INR': 60.5,
+  'USD': 0.74,
+  'INR': 61.5,
   'GBP': 0.58,
-  'AUD': 1.10,
-  'EUR': 0.68,
-  'JPY': 108.5,
-  'CNY': 5.2,
-  'BRL': 3.65,
-  'MXN': 12.5,
-  'SGD': 0.98,
-  'AED': 2.68,
-  'SAR': 2.74,
-  'ZAR': 13.5,
-  'NZD': 1.20,
+  'AUD': 1.12,
+  'EUR': 0.69,
+  'JPY': 110.0,
+  'CNY': 5.3,
+  'BRL': 3.7,
+  'MXN': 12.8,
+  'SGD': 0.99,
+  'AED': 2.7,
+  'SAR': 2.75,
+  'ZAR': 13.8,
+  'NZD': 1.22,
 };
 
 // Get user's country from IP address
@@ -211,7 +211,7 @@ export async function getUserCountry() {
     // Try to get from localStorage first (cache for 24 hours)
     const cached = localStorage.getItem('userCountry');
     const cachedTime = localStorage.getItem('userCountryTime');
-    
+
     if (cached && cachedTime) {
       const timeDiff = Date.now() - parseInt(cachedTime);
       // Cache for 24 hours
@@ -225,14 +225,14 @@ export async function getUserCountry() {
     if (!response.ok) {
       throw new Error('Failed to fetch location');
     }
-    
+
     const data = await response.json();
     const countryCode = data.country_code || 'CA';
-    
+
     // Cache the result
     localStorage.setItem('userCountry', countryCode);
     localStorage.setItem('userCountryTime', Date.now().toString());
-    
+
     return countryCode;
   } catch (error) {
     console.error('Error fetching user country:', error);
@@ -246,10 +246,43 @@ export function getCurrencyFromCountry(countryCode) {
   return COUNTRY_CURRENCY_MAP[countryCode] || 'CAD';
 }
 
+// Apply charm pricing (e.g. 4.99, 299)
+function applyCharmPricing(price, currencyCode) {
+  const numericPrice = parseFloat(price);
+
+  // High denomination currencies (no decimals usually)
+  const highDenomCurrencies = ['INR', 'JPY', 'KRW', 'VND', 'IDR', 'HUF'];
+
+  if (highDenomCurrencies.includes(currencyCode)) {
+    // Round to nearest 10, then subtract 1 to get ends in 9
+    // e.g. 302 -> 299, 308 -> 309, 1250 -> 1249
+    // Logic: Round to nearest prominent price point
+
+    if (numericPrice < 100) {
+      return Math.round(numericPrice); // Keep small numbers exact-ish
+    } else if (numericPrice < 1000) {
+      // e.g. 302.5 -> 299
+      return Math.round(numericPrice / 10) * 10 - 1;
+    } else {
+      // e.g. 1250 -> 1299 or 1249? Let's go with ending in 99 usually
+      return Math.round(numericPrice / 100) * 100 - 1;
+    }
+  }
+
+  // Standard currencies (USD, EUR, CAD, etc.)
+  // Round to nearest .99
+  const integerPart = Math.floor(numericPrice);
+  return (integerPart + 0.99).toFixed(2);
+}
+
 // Convert price from CAD to target currency
 export function convertPrice(priceInCAD, targetCurrency) {
   const rate = EXCHANGE_RATES[targetCurrency] || 1.0;
-  return (parseFloat(priceInCAD) * rate).toFixed(2);
+  // If staying in CAD, just return original (formatted to 2 decimal places if needed, but usually string)
+  if (targetCurrency === 'CAD') return parseFloat(priceInCAD).toFixed(2);
+
+  const convertedRaw = parseFloat(priceInCAD) * rate;
+  return applyCharmPricing(convertedRaw, targetCurrency);
 }
 
 // Format price with currency symbol
