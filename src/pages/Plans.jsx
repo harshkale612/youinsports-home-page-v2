@@ -18,9 +18,8 @@ import {
 import { MdCheckCircle } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import { 
-  getUserCountry, 
-  getCurrencyFromCountry, 
-  convertPrice, 
+  getUserCountry,
+  convertPrice,
   formatPrice,
   getCurrencyInfo 
 } from '../lib/utils';
@@ -64,7 +63,8 @@ const basePlans = [
 const Plans = () => {
   const theme = useTheme();
   const [selectedBilling, setSelectedBilling] = useState({ 0: 'yearly', 1: 'yearly' });
-  const [currencyInfo, setCurrencyInfo] = useState({ code: 'CAD', symbol: 'CA$' });
+  // Default to USD for international visitors until we detect country
+  const [currencyInfo, setCurrencyInfo] = useState({ code: 'USD', symbol: '$' });
   const [loading, setLoading] = useState(true);
 
   // Fetch user's country and set currency on mount
@@ -77,8 +77,8 @@ const Plans = () => {
         setCurrencyInfo(currency);
       } catch (error) {
         console.error('Error fetching currency:', error);
-        // Fallback to CAD
-        setCurrencyInfo({ code: 'CAD', symbol: 'CA$' });
+        // Fallback to USD for international visitors
+        setCurrencyInfo({ code: 'USD', symbol: '$' });
       } finally {
         setLoading(false);
       }

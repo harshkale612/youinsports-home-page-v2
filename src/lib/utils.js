@@ -227,7 +227,7 @@ export async function getUserCountry() {
     }
 
     const data = await response.json();
-    const countryCode = data.country_code || 'CA';
+    const countryCode = data.country_code || 'US';
 
     // Cache the result
     localStorage.setItem('userCountry', countryCode);
@@ -236,14 +236,23 @@ export async function getUserCountry() {
     return countryCode;
   } catch (error) {
     console.error('Error fetching user country:', error);
-    // Fallback to Canada
-    return 'CA';
+    // Fallback to United States for default USD pricing
+    return 'US';
   }
 }
 
 // Get currency code from country code
 export function getCurrencyFromCountry(countryCode) {
-  return COUNTRY_CURRENCY_MAP[countryCode] || 'CAD';
+  const code = (countryCode || '').toUpperCase();
+
+  // Business rule:
+  // - India  -> INR
+  // - Canada -> CAD
+  // - Others -> USD (default)
+  if (code === 'IN') return 'INR';
+  if (code === 'CA') return 'CAD';
+
+  return 'USD';
 }
 
 // Convert price from CAD to target currency
