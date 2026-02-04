@@ -218,96 +218,125 @@ const Plans = () => {
 
                       {/* Billing Options */}
                       <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-                        {/* Monthly Option */}
-                        <Box
-                          onClick={() => handleBillingSelect(planIndex, 'monthly')}
-                          sx={{
-                            flex: 1,
-                            p: 2,
-                            borderRadius: 2,
-                            border: `2px solid ${
-                              selectedBilling[planIndex] === 'monthly' 
-                                ? theme.palette.secondary.main 
-                                : theme.palette.divider
-                            }`,
-                            bgcolor: selectedBilling[planIndex] === 'monthly' 
-                              ? (theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.05)' : 'rgba(242, 106, 39, 0.1)')
-                              : 'transparent',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease',
-                            '&:hover': {
-                              borderColor: theme.palette.secondary.main,
-                              bgcolor: theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.05)' : 'rgba(242, 106, 39, 0.1)',
-                            },
-                          }}
-                        >
-                          <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
-                            Monthly
-                          </Typography>
-                          <Typography variant="h5" fontWeight={800} color="text.primary">
-                            {loading ? (
-                              <CircularProgress size={20} sx={{ color: 'text.primary' }} />
-                            ) : (
-                              formatPrice(plan.monthly.price, currencyInfo.code)
-                            )}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {plan.monthly.period}
-                          </Typography>
-                        </Box>
-
-                        {/* Yearly Option */}
-                        <Box
-                          onClick={() => handleBillingSelect(planIndex, 'yearly')}
-                          sx={{
-                            flex: 1,
-                            p: 2,
-                            borderRadius: 2,
-                            border: `2px solid ${
-                              selectedBilling[planIndex] === 'yearly' 
-                                ? '#418BCA' 
-                                : theme.palette.divider
-                            }`,
-                            bgcolor: selectedBilling[planIndex] === 'yearly' 
-                              ? (theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.05)' : 'rgba(65, 139, 202, 0.1)')
-                              : 'transparent',
-                            cursor: 'pointer',
-                            position: 'relative',
-                            transition: 'all 0.2s ease',
-                            '&:hover': {
-                              borderColor: '#418BCA',
-                              bgcolor: theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.05)' : 'rgba(65, 139, 202, 0.1)',
-                            },
-                          }}
-                        >
-                          <Chip
-                            label="Save 20%"
-                            size="small"
+                        {/* For Basic plan, only show yearly option */}
+                        {planIndex === 0 ? (
+                          <Box
                             sx={{
-                              position: 'absolute',
-                              top: -8,
-                              right: 8,
-                              bgcolor: theme.palette.secondary.main,
-                              color: 'white',
-                              fontWeight: 700,
-                              fontSize: '0.65rem',
-                              height: 20,
+                              width: '100%',
+                              p: 2,
+                              borderRadius: 2,
+                              border: `2px solid ${theme.palette.divider}`,
+                              bgcolor: 'transparent',
                             }}
-                          />
-                          <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
-                            Yearly
-                          </Typography>
-                          <Typography variant="h5" fontWeight={800} color="text.primary">
-                            {loading ? (
-                              <CircularProgress size={20} sx={{ color: 'text.primary' }} />
-                            ) : (
-                              formatPrice(plan.yearly.price, currencyInfo.code)
-                            )}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {plan.yearly.period}
-                          </Typography>
-                        </Box>
+                          >
+                            <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
+                              Annual
+                            </Typography>
+                            <Typography variant="h5" fontWeight={800} color="text.primary">
+                              {loading ? (
+                                <CircularProgress size={20} sx={{ color: 'text.primary' }} />
+                              ) : (
+                                formatPrice(plan.yearly.price, currencyInfo.code)
+                              )}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              {plan.yearly.period}
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <>
+                            {/* Monthly Option */}
+                            <Box
+                              onClick={() => handleBillingSelect(planIndex, 'monthly')}
+                              sx={{
+                                flex: 1,
+                                p: 2,
+                                borderRadius: 2,
+                                border: `2px solid ${
+                                  selectedBilling[planIndex] === 'monthly' 
+                                    ? theme.palette.secondary.main 
+                                    : theme.palette.divider
+                                }`,
+                                bgcolor: selectedBilling[planIndex] === 'monthly' 
+                                  ? (theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.05)' : 'rgba(242, 106, 39, 0.1)')
+                                  : 'transparent',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease',
+                                '&:hover': {
+                                  borderColor: theme.palette.secondary.main,
+                                  bgcolor: theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.05)' : 'rgba(242, 106, 39, 0.1)',
+                                },
+                              }}
+                            >
+                              <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
+                                Monthly
+                              </Typography>
+                              <Typography variant="h5" fontWeight={800} color="text.primary">
+                                {loading ? (
+                                  <CircularProgress size={20} sx={{ color: 'text.primary' }} />
+                                ) : (
+                                  formatPrice(plan.monthly.price, currencyInfo.code)
+                                )}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {plan.monthly.period}
+                              </Typography>
+                            </Box>
+
+                            {/* Yearly Option */}
+                            <Box
+                              onClick={() => handleBillingSelect(planIndex, 'yearly')}
+                              sx={{
+                                flex: 1,
+                                p: 2,
+                                borderRadius: 2,
+                                border: `2px solid ${
+                                  selectedBilling[planIndex] === 'yearly' 
+                                    ? '#418BCA' 
+                                    : theme.palette.divider
+                                }`,
+                                bgcolor: selectedBilling[planIndex] === 'yearly' 
+                                  ? (theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.05)' : 'rgba(65, 139, 202, 0.1)')
+                                  : 'transparent',
+                                cursor: 'pointer',
+                                position: 'relative',
+                                transition: 'all 0.2s ease',
+                                '&:hover': {
+                                  borderColor: '#418BCA',
+                                  bgcolor: theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.05)' : 'rgba(65, 139, 202, 0.1)',
+                                },
+                              }}
+                            >
+                              <Chip
+                                label="Save 20%"
+                                size="small"
+                                sx={{
+                                  position: 'absolute',
+                                  top: -8,
+                                  right: 8,
+                                  bgcolor: theme.palette.secondary.main,
+                                  color: 'white',
+                                  fontWeight: 700,
+                                  fontSize: '0.65rem',
+                                  height: 20,
+                                }}
+                              />
+                              <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
+                                Yearly
+                              </Typography>
+                              <Typography variant="h5" fontWeight={800} color="text.primary">
+                                {loading ? (
+                                  <CircularProgress size={20} sx={{ color: 'text.primary' }} />
+                                ) : (
+                                  formatPrice(plan.yearly.price, currencyInfo.code)
+                                )}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {plan.yearly.period}
+                              </Typography>
+                            </Box>
+                          </>
+                        )}
                       </Box>
                     </CardContent>
                   </Card>
