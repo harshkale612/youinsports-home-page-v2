@@ -165,17 +165,6 @@ const Plans = () => {
               Unlock your full athletic potential.
             </Typography>
 
-            {/* Currency Legend */}
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ maxWidth: '700px', mx: 'auto', mb: 2 }}
-            >
-              Supported currencies:
-              {' '}<strong>USD (US Dollar)</strong>,
-              {' '}<strong>CAD (Canadian Dollar)</strong>,
-              {' '}<strong>INR (Indian Rupee)</strong>.
-            </Typography>
           </motion.div>
         </Box>
 
