@@ -21,7 +21,8 @@ import {
   getUserCountry,
   convertPrice,
   formatPrice,
-  getCurrencyInfo 
+  getCurrencyInfo,
+  getCurrencyLabel,
 } from '../lib/utils';
 
 // Base prices in CAD
@@ -170,10 +171,10 @@ const Plans = () => {
               color="text.secondary"
               sx={{ maxWidth: '700px', mx: 'auto', mb: 2 }}
             >
-              Prices are shown in your local currency:
-              {' '}<strong>USD</strong> (US Dollar),
-              {' '}<strong>CAD</strong> (Canadian Dollar),
-              {' '}<strong>INR</strong> (Indian Rupee).
+              Supported currencies:
+              {' '}<strong>USD (US Dollar)</strong>,
+              {' '}<strong>CAD (Canadian Dollar)</strong>,
+              {' '}<strong>INR (Indian Rupee)</strong>.
             </Typography>
           </motion.div>
         </Box>
@@ -247,7 +248,7 @@ const Plans = () => {
                               </Typography>
                               {!loading && (
                                 <Typography variant="caption" color="text.secondary">
-                                  {currencyInfo.code}
+                                  {getCurrencyLabel(currencyInfo.code)}
                                 </Typography>
                               )}
                             </Box>
@@ -299,7 +300,7 @@ const Plans = () => {
                               </Typography>
                               {!loading && (
                                 <Typography variant="caption" color="text.secondary">
-                                  {currencyInfo.code}
+                                  {getCurrencyLabel(currencyInfo.code)}
                                 </Typography>
                               )}
                               <Typography variant="caption" color="text.secondary">
@@ -357,7 +358,7 @@ const Plans = () => {
                               </Typography>
                               {!loading && (
                                 <Typography variant="caption" color="text.secondary">
-                                  {currencyInfo.code}
+                                  {getCurrencyLabel(currencyInfo.code)}
                                 </Typography>
                               )}
                               <Typography variant="caption" color="text.secondary">

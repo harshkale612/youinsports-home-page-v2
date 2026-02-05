@@ -255,6 +255,18 @@ export function getCurrencyFromCountry(countryCode) {
   return 'USD';
 }
 
+// Human‑readable currency labels
+const CURRENCY_LABELS = {
+  USD: 'USD (US Dollar)',
+  CAD: 'CAD (Canadian Dollar)',
+  INR: 'INR (Indian Rupee)',
+};
+
+export function getCurrencyLabel(currencyCode) {
+  const code = (currencyCode || '').toUpperCase();
+  return CURRENCY_LABELS[code] || code;
+}
+
 // Convert price from CAD to target currency
 export function convertPrice(priceInCAD, targetCurrency) {
   const rate = EXCHANGE_RATES[targetCurrency] || 1.0;
