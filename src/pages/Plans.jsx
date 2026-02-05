@@ -163,6 +163,18 @@ const Plans = () => {
             >
               Unlock your full athletic potential.
             </Typography>
+
+            {/* Currency Legend */}
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ maxWidth: '700px', mx: 'auto', mb: 2 }}
+            >
+              Prices are shown in your local currency:
+              {' '}<strong>USD</strong> (US Dollar),
+              {' '}<strong>CAD</strong> (Canadian Dollar),
+              {' '}<strong>INR</strong> (Indian Rupee).
+            </Typography>
           </motion.div>
         </Box>
 
@@ -229,9 +241,16 @@ const Plans = () => {
                               bgcolor: 'transparent',
                             }}
                           >
-                            <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
-                              Annual
-                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', mb: 0.5 }}>
+                              <Typography variant="body2" fontWeight={600} color="text.secondary">
+                                Annual
+                              </Typography>
+                              {!loading && (
+                                <Typography variant="caption" color="text.secondary">
+                                  {currencyInfo.code}
+                                </Typography>
+                              )}
+                            </Box>
                             <Typography variant="h5" fontWeight={800} color="text.primary">
                               {loading ? (
                                 <CircularProgress size={20} sx={{ color: 'text.primary' }} />
@@ -278,6 +297,11 @@ const Plans = () => {
                                   formatPrice(plan.monthly.price, currencyInfo.code)
                                 )}
                               </Typography>
+                              {!loading && (
+                                <Typography variant="caption" color="text.secondary">
+                                  {currencyInfo.code}
+                                </Typography>
+                              )}
                               <Typography variant="caption" color="text.secondary">
                                 {plan.monthly.period}
                               </Typography>
@@ -331,6 +355,11 @@ const Plans = () => {
                                   formatPrice(plan.yearly.price, currencyInfo.code)
                                 )}
                               </Typography>
+                              {!loading && (
+                                <Typography variant="caption" color="text.secondary">
+                                  {currencyInfo.code}
+                                </Typography>
+                              )}
                               <Typography variant="caption" color="text.secondary">
                                 {plan.yearly.period}
                               </Typography>
