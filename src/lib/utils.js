@@ -168,9 +168,9 @@ const COUNTRY_CURRENCY_MAP = {
 
 // Currency symbols
 const CURRENCY_SYMBOLS = {
-  'INR': '₹',
-  'USD': '$',
-  'CAD': 'CA$',
+  'INR': 'IN ₹',
+  'USD': 'US $',
+  'CAD': 'CA $',
   'GBP': '£',
   'AUD': 'A$',
   'EUR': '€',
