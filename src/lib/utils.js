@@ -273,13 +273,17 @@ export function convertPrice(priceInCAD, targetCurrency) {
   return (parseFloat(priceInCAD) * rate).toFixed(2);
 }
 
-// Format price with currency symbol
+// Format price: USD, CAD, INR before price (no $ or ₹ symbol)
 export function formatPrice(price, currencyCode) {
-  const symbol = CURRENCY_SYMBOLS[currencyCode] || currencyCode;
+  const code = (currencyCode || '').toUpperCase();
   const formattedPrice = parseFloat(price).toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  if (code === 'USD' || code === 'CAD' || code === 'INR') {
+    return `${code} ${formattedPrice}`;
+  }
+  const symbol = CURRENCY_SYMBOLS[code] || code;
   return `${symbol}${formattedPrice}`;
 }
 
