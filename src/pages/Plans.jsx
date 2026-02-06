@@ -24,6 +24,7 @@ import {
   getCurrencyInfo,
   getCurrencyLabel,
 } from '../lib/utils';
+import PricingFAQ, { PRICING_FAQ_ITEMS } from '../components/PricingFAQ';
 
 // Base prices in CAD
 const basePlans = [
@@ -391,6 +392,8 @@ const Plans = () => {
             No payment due today • Cancel anytime
           </Typography>
         </Box>
+
+        <PricingFAQ items={PRICING_FAQ_ITEMS} />
 
       </Container>
     </Box>
