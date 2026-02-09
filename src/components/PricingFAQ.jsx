@@ -347,7 +347,7 @@ export const PRICING_FAQ_ITEMS = [
     id: 'monthly-or-yearly',
     question: 'Is the pricing monthly or yearly?',
     answer:
-      'Both Basic and Premium can be billed monthly or yearly. Yearly billing saves 20% compared to paying monthly. You can choose your billing option before starting the free trial.',
+      'Basic is billed annually only, so you see the annual price directly. Premium can be billed monthly or yearly, and the yearly option saves 20% compared to paying month by month.',
   },
   {
     id: 'cancel-anytime',
