@@ -249,7 +249,7 @@ const Plans = () => {
                               )}
                             </Typography>
                             <Typography variant="caption" color="text.secondary">
-                              /year
+                              /yr
                             </Typography>
                           </Box>
                         ) : (
