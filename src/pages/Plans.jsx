@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { MdCheckCircle } from 'react-icons/md';
 import { motion } from 'framer-motion';
-import { 
+import {
   getUserCountry,
   convertPrice,
   formatPrice,
@@ -28,39 +28,36 @@ import PricingFAQ, { PRICING_FAQ_ITEMS } from '../components/PricingFAQ';
 
 // Base prices in CAD
 const basePlans = [
-    {
-      title: 'Basic',
-      features: [
-        'Blue Tick Verified Profile',
-        'Access to Sponsorship Program',
-      ],
-      monthly: {
-        priceCAD: '5.00',
-      },
-      yearly: {
-        priceCAD: '4.00',
-        totalYearlyCAD: '48.00',
-      },
+  {
+    title: 'Basic',
+    features: [
+      'Blue Tick Verified Profile',
+      'Access to Sponsorship Program',
+    ],
+    yearly: {
+      priceCAD: '4.00',
+      totalYearlyCAD: '48.00',
     },
-    {
-      title: 'Premium',
-      features: [
-        'Blue Tick Verified Profile',
-        'Access to Sponsorship Program',
-        'Generate PGN with Scoresheet/Game Video',
-        'Download PGN File',
-        'Game Analysis',
-        'Stockfish Analysis',
-      ],
-      monthly: {
-        priceCAD: '12.99',
-      },
-      yearly: {
-        priceCAD: '9.92',
-        totalYearlyCAD: '119.00',
-      },
+  },
+  {
+    title: 'Premium',
+    features: [
+      'Blue Tick Verified Profile',
+      'Access to Sponsorship Program',
+      'Generate PGN with Scoresheet/Game Video',
+      'Download PGN File',
+      'Game Analysis',
+      'Stockfish Analysis',
+    ],
+    monthly: {
+      priceCAD: '12.99',
     },
-  ];
+    yearly: {
+      priceCAD: '9.92',
+      totalYearlyCAD: '119.00',
+    },
+  },
+];
 
 const Plans = () => {
   const theme = useTheme();
@@ -93,11 +90,13 @@ const Plans = () => {
   const plans = useMemo(() => {
     return basePlans.map(plan => ({
       ...plan,
-      monthly: {
-        ...plan.monthly,
-        price: convertPrice(plan.monthly.priceCAD, currencyInfo.code),
-        period: 'per month',
-      },
+      ...(plan.monthly && {
+        monthly: {
+          ...plan.monthly,
+          price: convertPrice(plan.monthly.priceCAD, currencyInfo.code),
+          period: 'per month',
+        },
+      }),
       yearly: {
         ...plan.yearly,
         price: convertPrice(plan.yearly.priceCAD, currencyInfo.code),
@@ -192,9 +191,9 @@ const Plans = () => {
                     }}
                   >
                     <CardContent sx={{ p: 4, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                      <Typography 
-                        variant="h4" 
-                        fontWeight={800} 
+                      <Typography
+                        variant="h4"
+                        fontWeight={800}
                         gutterBottom
                         sx={{ color: 'text.primary', mb: 3 }}
                       >
@@ -209,8 +208,8 @@ const Plans = () => {
                             </ListItemIcon>
                             <ListItemText
                               primary={feature}
-                              primaryTypographyProps={{ 
-                                variant: 'body1', 
+                              primaryTypographyProps={{
+                                variant: 'body1',
                                 fontWeight: 500,
                                 color: 'text.primary'
                               }}
@@ -222,7 +221,7 @@ const Plans = () => {
                       {/* Billing Options */}
                       <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
                         {/* For Basic plan, only show yearly option */}
-                        {planIndex === 0 ? (
+                        {!plan.monthly ? (
                           <Box
                             sx={{
                               width: '100%',
@@ -246,11 +245,11 @@ const Plans = () => {
                               {loading ? (
                                 <CircularProgress size={20} sx={{ color: 'text.primary' }} />
                               ) : (
-                                formatPrice(plan.yearly.price, currencyInfo.code)
+                                formatPrice(plan.yearly.totalYearly, currencyInfo.code)
                               )}
                             </Typography>
                             <Typography variant="caption" color="text.secondary">
-                              {plan.yearly.period}
+                              /year
                             </Typography>
                           </Box>
                         ) : (
@@ -262,12 +261,11 @@ const Plans = () => {
                                 flex: 1,
                                 p: 2,
                                 borderRadius: 2,
-                                border: `2px solid ${
-                                  selectedBilling[planIndex] === 'monthly' 
-                                    ? theme.palette.secondary.main 
-                                    : theme.palette.divider
-                                }`,
-                                bgcolor: selectedBilling[planIndex] === 'monthly' 
+                                border: `2px solid ${selectedBilling[planIndex] === 'monthly'
+                                  ? theme.palette.secondary.main
+                                  : theme.palette.divider
+                                  }`,
+                                bgcolor: selectedBilling[planIndex] === 'monthly'
                                   ? (theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.05)' : 'rgba(242, 106, 39, 0.1)')
                                   : 'transparent',
                                 cursor: 'pointer',
@@ -305,12 +303,11 @@ const Plans = () => {
                                 flex: 1,
                                 p: 2,
                                 borderRadius: 2,
-                                border: `2px solid ${
-                                  selectedBilling[planIndex] === 'yearly' 
-                                    ? '#418BCA' 
-                                    : theme.palette.divider
-                                }`,
-                                bgcolor: selectedBilling[planIndex] === 'yearly' 
+                                border: `2px solid ${selectedBilling[planIndex] === 'yearly'
+                                  ? '#418BCA'
+                                  : theme.palette.divider
+                                  }`,
+                                bgcolor: selectedBilling[planIndex] === 'yearly'
                                   ? (theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.05)' : 'rgba(65, 139, 202, 0.1)')
                                   : 'transparent',
                                 cursor: 'pointer',
@@ -337,7 +334,7 @@ const Plans = () => {
                                 }}
                               />
                               <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
-                                Yearly
+                                Annual
                               </Typography>
                               <Typography variant="h5" fontWeight={800} color="text.primary">
                                 {loading ? (
