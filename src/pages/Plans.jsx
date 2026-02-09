@@ -231,16 +231,9 @@ const Plans = () => {
                               bgcolor: 'transparent',
                             }}
                           >
-                            <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', mb: 0.5 }}>
-                              <Typography variant="body2" fontWeight={600} color="text.secondary">
-                                Annual
-                              </Typography>
-                              {!loading && (
-                                <Typography variant="caption" color="text.secondary">
-                                  {getCurrencyLabel(currencyInfo.code)}
-                                </Typography>
-                              )}
-                            </Box>
+                            <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
+                              Annual
+                            </Typography>
                             <Typography variant="h5" fontWeight={800} color="text.primary">
                               {loading ? (
                                 <CircularProgress size={20} sx={{ color: 'text.primary' }} />
@@ -248,6 +241,11 @@ const Plans = () => {
                                 formatPrice(plan.yearly.totalYearly, currencyInfo.code)
                               )}
                             </Typography>
+                            {!loading && (
+                              <Typography variant="caption" color="text.secondary">
+                                {getCurrencyLabel(currencyInfo.code)}
+                              </Typography>
+                            )}
                             <Typography variant="caption" color="text.secondary">
                               /yr
                             </Typography>
