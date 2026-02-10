@@ -19,52 +19,19 @@ import { MdCheckCircle } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import {
   getUserCountry,
-  convertPrice,
   formatPrice,
   getCurrencyInfo,
   getCurrencyLabel,
 } from '../lib/utils';
 import PricingFAQ, { PRICING_FAQ_ITEMS } from '../components/PricingFAQ';
-
-// Base prices in CAD
-const basePlans = [
-  {
-    title: 'Basic',
-    features: [
-      'Blue Tick Verified Profile',
-      'Access to Sponsorship Program',
-    ],
-    yearly: {
-      priceCAD: '4.00',
-      totalYearlyCAD: '48.00',
-    },
-  },
-  {
-    title: 'Premium',
-    features: [
-      'Blue Tick Verified Profile',
-      'Access to Sponsorship Program',
-      'Generate PGN with Scoresheet/Game Video',
-      'Download PGN File',
-      'Game Analysis',
-      'Stockfish Analysis',
-    ],
-    monthly: {
-      priceCAD: '12.99',
-    },
-    yearly: {
-      priceCAD: '9.92',
-      totalYearlyCAD: '119.00',
-    },
-  },
-];
+import DownloadAppModal from '../components/DownloadAppModal';
 
 const Plans = () => {
   const theme = useTheme();
   const [selectedBilling, setSelectedBilling] = useState({ 0: 'yearly', 1: 'yearly' });
-  // Default to USD for international visitors until we detect country
   const [currencyInfo, setCurrencyInfo] = useState({ code: 'USD', symbol: '$' });
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   // Fetch user's country and set currency on mount
   useEffect(() => {
@@ -76,7 +43,6 @@ const Plans = () => {
         setCurrencyInfo(currency);
       } catch (error) {
         console.error('Error fetching currency:', error);
-        // Fallback to USD for international visitors
         setCurrencyInfo({ code: 'USD', symbol: '$' });
       } finally {
         setLoading(false);
@@ -86,25 +52,64 @@ const Plans = () => {
     fetchCurrency();
   }, []);
 
+  const REGIONAL_PRICING = useMemo(() => ({
+    CAD: {
+      basic: { yearly: 48, monthlyEq: 4 },
+      premium: { yearly: 119, monthly: 12.99, monthlyEq: 9.92 }
+    },
+    USD: {
+      basic: { yearly: 36, monthlyEq: 3 },
+      premium: { yearly: 89, monthly: 9.99, monthlyEq: 7.42 }
+    },
+    INR: {
+      basic: { yearly: 2999, monthlyEq: 250 },
+      premium: { yearly: 6999, monthly: 799, monthlyEq: 583 }
+    }
+  }), []);
+
   // Convert plans with current currency
   const plans = useMemo(() => {
-    return basePlans.map(plan => ({
-      ...plan,
-      ...(plan.monthly && {
+    const currentPricing = REGIONAL_PRICING[currencyInfo.code] || REGIONAL_PRICING['USD'];
+
+    return [
+      {
+        title: 'Basic',
+        features: [
+          'Blue Tick Verified Profile',
+          'Access to Sponsorship Program',
+        ],
+        yearly: {
+          price: currentPricing.basic.monthlyEq.toFixed(2),
+          totalYearly: currentPricing.basic.yearly.toFixed(2),
+          period: `billed at ${formatPrice(currentPricing.basic.yearly, currencyInfo.code)}/yr`,
+        },
+        buttonText: `Subscribe Now - ${formatPrice(currentPricing.basic.yearly, currencyInfo.code)} / yearly`,
+        buttonAction: () => setOpenModal(true),
+      },
+      {
+        title: 'Premium',
+        features: [
+          'Blue Tick Verified Profile',
+          'Access to Sponsorship Program',
+          'Generate PGN with Scoresheet/Game Video',
+          'Download PGN File',
+          'Game Analysis',
+          'Stockfish Analysis',
+        ],
         monthly: {
-          ...plan.monthly,
-          price: convertPrice(plan.monthly.priceCAD, currencyInfo.code),
+          price: currentPricing.premium.monthly.toFixed(2),
           period: 'per month',
         },
-      }),
-      yearly: {
-        ...plan.yearly,
-        price: convertPrice(plan.yearly.priceCAD, currencyInfo.code),
-        totalYearly: convertPrice(plan.yearly.totalYearlyCAD, currencyInfo.code),
-        period: `billed at ${formatPrice(convertPrice(plan.yearly.totalYearlyCAD, currencyInfo.code), currencyInfo.code)}/yr`,
+        yearly: {
+          price: currentPricing.premium.monthlyEq.toFixed(2),
+          totalYearly: currentPricing.premium.yearly.toFixed(2),
+          period: `billed at ${formatPrice(currentPricing.premium.yearly, currencyInfo.code)}/yr`,
+        },
+        buttonText: 'Start 30-Day Free Trial',
+        buttonAction: () => setOpenModal(true),
       },
-    }));
-  }, [currencyInfo.code]);
+    ];
+  }, [currencyInfo.code, REGIONAL_PRICING]);
 
   const handleBillingSelect = (planIndex, billingType) => {
     setSelectedBilling(prev => ({
@@ -151,7 +156,11 @@ const Plans = () => {
               sx={{
                 fontSize: { xs: '2.5rem', md: '3.5rem' },
                 fontWeight: 800,
-                color: 'text.primary',
+                background: theme.palette.mode === 'dark'
+                  ? 'linear-gradient(45deg, #FFFFFF 30%, #418BCA 90%)'
+                  : 'linear-gradient(45deg, #0C3042 30%, #418BCA 90%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
                 mb: 2,
               }}
             >
@@ -159,11 +168,20 @@ const Plans = () => {
             </Typography>
             <Typography
               variant="h5"
-              color="text.secondary"
-              sx={{ maxWidth: '700px', mx: 'auto', mb: 6, fontWeight: 400 }}
+              sx={{
+                maxWidth: '700px',
+                mx: 'auto',
+                mb: 6,
+                fontWeight: 500,
+                color: '#F26A27',
+                textShadow: theme.palette.mode === 'dark'
+                  ? '0 0 20px rgba(242, 106, 39, 0.3)'
+                  : 'none'
+              }}
             >
               Unlock your full athletic potential.
             </Typography>
+
 
           </motion.div>
         </Box>
@@ -188,6 +206,10 @@ const Plans = () => {
                       bgcolor: theme.palette.mode === 'light' ? '#ffffff' : '#151e32',
                       border: `1px solid ${theme.palette.divider}`,
                       minHeight: { xs: 'auto', md: '600px' },
+                      borderRadius: 4,
+                      boxShadow: theme.palette.mode === 'light'
+                        ? '0 10px 40px -10px rgba(0,0,0,0.05)'
+                        : '0 10px 40px -10px rgba(0,0,0,0.2)',
                     }}
                   >
                     <CardContent sx={{ p: 4, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -227,27 +249,25 @@ const Plans = () => {
                               width: '100%',
                               p: 2,
                               borderRadius: 2,
-                              border: `2px solid ${theme.palette.divider}`,
-                              bgcolor: 'transparent',
+                              border: `2px solid ${theme.palette.secondary.main}`,
+                              bgcolor: theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.05)' : 'rgba(242, 106, 39, 0.1)',
+                              position: 'relative',
                             }}
                           >
-                            <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
-                              Annual
+
+                            <Typography variant="body2" fontWeight={600} color="text.primary" mb={0.5} align="center">
+                              Yearly
                             </Typography>
-                            <Typography variant="h5" fontWeight={800} color="text.primary">
-                              {loading ? (
-                                <CircularProgress size={20} sx={{ color: 'text.primary' }} />
-                              ) : (
-                                formatPrice(plan.yearly.totalYearly, currencyInfo.code)
+                            <Box display="flex" justifyContent="center" alignItems="baseline" gap={0.5}>
+                              {!loading && (
+                                <Typography variant="h5" fontWeight={800} color="text.primary">
+                                  {formatPrice(plan.yearly.price, currencyInfo.code)}
+                                </Typography>
                               )}
-                            </Typography>
-                            {!loading && (
-                              <Typography variant="caption" color="text.secondary">
-                                {getCurrencyLabel(currencyInfo.code)}
-                              </Typography>
-                            )}
-                            <Typography variant="caption" color="text.secondary">
-                              /yr
+                              {loading && <CircularProgress size={20} />}
+                            </Box>
+                            <Typography variant="caption" color="text.secondary" display="block" align="center" mt={0.5}>
+                              {plan.yearly.period}
                             </Typography>
                           </Box>
                         ) : (
@@ -274,22 +294,15 @@ const Plans = () => {
                                 },
                               }}
                             >
-                              <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
+                              <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5} align="center">
                                 Monthly
                               </Typography>
-                              <Typography variant="h5" fontWeight={800} color="text.primary">
-                                {loading ? (
-                                  <CircularProgress size={20} sx={{ color: 'text.primary' }} />
-                                ) : (
-                                  formatPrice(plan.monthly.price, currencyInfo.code)
-                                )}
-                              </Typography>
-                              {!loading && (
-                                <Typography variant="caption" color="text.secondary">
-                                  {getCurrencyLabel(currencyInfo.code)}
+                              <Box display="flex" justifyContent="center" alignItems="baseline" gap={0.5}>
+                                <Typography variant="h6" fontWeight={800} color="text.primary">
+                                  {formatPrice(plan.monthly.price, currencyInfo.code)}
                                 </Typography>
-                              )}
-                              <Typography variant="caption" color="text.secondary">
+                              </Box>
+                              <Typography variant="caption" color="text.secondary" display="block" align="center">
                                 {plan.monthly.period}
                               </Typography>
                             </Box>
@@ -322,8 +335,8 @@ const Plans = () => {
                                 size="small"
                                 sx={{
                                   position: 'absolute',
-                                  top: -8,
-                                  right: 8,
+                                  top: -10,
+                                  right: -5,
                                   bgcolor: theme.palette.secondary.main,
                                   color: 'white',
                                   fontWeight: 700,
@@ -331,28 +344,46 @@ const Plans = () => {
                                   height: 20,
                                 }}
                               />
-                              <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5}>
-                                Annual
+                              <Typography variant="body2" fontWeight={600} color="text.secondary" mb={0.5} align="center">
+                                Yearly
                               </Typography>
-                              <Typography variant="h5" fontWeight={800} color="text.primary">
-                                {loading ? (
-                                  <CircularProgress size={20} sx={{ color: 'text.primary' }} />
-                                ) : (
-                                  formatPrice(plan.yearly.price, currencyInfo.code)
-                                )}
-                              </Typography>
-                              {!loading && (
-                                <Typography variant="caption" color="text.secondary">
-                                  {getCurrencyLabel(currencyInfo.code)}
+                              <Box display="flex" justifyContent="center" alignItems="baseline" gap={0.5}>
+                                <Typography variant="h6" fontWeight={800} color="text.primary">
+                                  {formatPrice(plan.yearly.price, currencyInfo.code)}
                                 </Typography>
-                              )}
-                              <Typography variant="caption" color="text.secondary">
+                              </Box>
+                              <Typography variant="caption" color="text.secondary" display="block" align="center">
                                 {plan.yearly.period}
                               </Typography>
                             </Box>
                           </>
                         )}
                       </Box>
+
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        size="large"
+                        onClick={plan.buttonAction}
+                        sx={{
+                          bgcolor: theme.palette.secondary.main,
+                          color: 'white',
+                          py: 1.5,
+                          fontSize: '1rem',
+                          fontWeight: 700,
+                          borderRadius: 2,
+                          '&:hover': {
+                            bgcolor: '#E05D1F',
+                            transform: 'translateY(-2px)',
+                          },
+                        }}
+                      >
+                        {plan.buttonText}
+                      </Button>
+                      <Typography variant="caption" color="text.secondary" display="block" align="center" mt={2}>
+                        {planIndex === 0 ? "Pay today • Cancel anytime" : "No payment due today • Cancel anytime"}
+                      </Typography>
+
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -361,37 +392,13 @@ const Plans = () => {
           </Grid>
         </motion.div>
 
-        {/* CTA Button and Disclaimer */}
-        <Box sx={{ mt: 6, textAlign: 'center', maxWidth: '600px', mx: 'auto' }}>
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
-            sx={{
-              bgcolor: theme.palette.secondary.main,
-              color: 'white',
-              py: 2,
-              fontSize: '1.1rem',
-              fontWeight: 700,
-              borderRadius: 2,
-              mb: 2,
-              '&:hover': {
-                bgcolor: '#E05D1F',
-                transform: 'translateY(-2px)',
-              },
-            }}
-          >
-            Start 30-Day Free Trial
-          </Button>
-          <Typography variant="body2" color="text.secondary">
-            No payment due today • Cancel anytime
-          </Typography>
-        </Box>
-
         <PricingFAQ items={PRICING_FAQ_ITEMS} />
 
-      </Container>
-    </Box>
+        {/* App Download Modal */}
+        <DownloadAppModal open={openModal} onClose={() => setOpenModal(false)} />
+
+      </Container >
+    </Box >
   );
 };
 
