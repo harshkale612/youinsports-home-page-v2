@@ -168,9 +168,9 @@ const COUNTRY_CURRENCY_MAP = {
 
 // Currency symbols
 const CURRENCY_SYMBOLS = {
-  'INR': 'IN ₹',
-  'USD': 'US $',
-  'CAD': 'CA $',
+  'INR': '₹ ',
+  'USD': '$ ',
+  'CAD': '$ ',
   'GBP': '£',
   'AUD': 'A$',
   'EUR': '€',
@@ -280,10 +280,7 @@ export function formatPrice(price, currencyCode) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  if (code === 'USD' || code === 'CAD' || code === 'INR') {
-    return `${code} ${formattedPrice}`;
-  }
-  const symbol = CURRENCY_SYMBOLS[code] || code;
+  const symbol = CURRENCY_SYMBOLS[code] || (code === 'USD' || code === 'CAD' || code === 'INR' ? '' : code);
   return `${symbol}${formattedPrice}`;
 }
 

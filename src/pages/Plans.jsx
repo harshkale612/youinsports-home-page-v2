@@ -62,8 +62,8 @@ const Plans = () => {
       premium: { yearly: 89, monthly: 9.99, monthlyEq: 7.42 }
     },
     INR: {
-      basic: { yearly: 2999, monthlyEq: 250 },
-      premium: { yearly: 6999, monthly: 799, monthlyEq: 583 }
+      basic: { yearly: 99.99, monthlyEq: 8.33 },
+      premium: { yearly: 479.00, monthly: 49.99, monthlyEq: 39.92 }
     }
   }), []);
 
@@ -270,24 +270,41 @@ const Plans = () => {
                               width: '100%',
                               p: 2.5,
                               borderRadius: '16px',
-                              border: `2px solid ${theme.palette.secondary.main}`,
-                              bgcolor: theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.04)' : 'rgba(242, 106, 39, 0.08)',
+                              border: '2px solid #418BCA',
+                              bgcolor: theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.04)' : 'rgba(65, 139, 202, 0.08)',
                               position: 'relative',
                             }}
                           >
 
+                            <Chip
+                              label="Save 20%"
+                              size="small"
+                              sx={{
+                                position: 'absolute',
+                                top: -12,
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                bgcolor: theme.palette.secondary.main,
+                                color: 'white',
+                                fontWeight: 800,
+                                fontSize: '0.7rem',
+                                height: 22,
+                                px: 1,
+                                boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+                              }}
+                            />
                             <Typography variant="body2" fontWeight={700} color="text.primary" mb={0.5} align="center" sx={{ textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.05em', opacity: 0.8 }}>
                               Yearly
                             </Typography>
                             <Box display="flex" justifyContent="center" alignItems="baseline" gap={0.5}>
                               {!loading && (
-                                <Typography variant="h5" fontWeight={800} color="text.primary">
+                                <Typography variant="h4" fontWeight={900} color="text.primary">
                                   {formatPrice(plan.yearly.price, currencyInfo.code)}
                                 </Typography>
                               )}
                               {loading && <CircularProgress size={20} />}
                             </Box>
-                            <Typography variant="caption" color="text.secondary" display="block" align="center" mt={0.5} sx={{ fontWeight: 500 }}>
+                            <Typography variant="caption" color="primary.main" display="block" align="center" mt={0.5} sx={{ fontWeight: 600 }}>
                               {plan.yearly.period}
                             </Typography>
                           </Box>
@@ -320,7 +337,7 @@ const Plans = () => {
                                 Monthly
                               </Typography>
                               <Box display="flex" justifyContent="center" alignItems="baseline" gap={0.5}>
-                                <Typography variant="h6" fontWeight={800} color={selectedBilling[planIndex] === 'monthly' ? "text.primary" : "text.secondary"}>
+                                <Typography variant="h4" fontWeight={900} color={selectedBilling[planIndex] === 'monthly' ? "text.primary" : "text.secondary"}>
                                   {formatPrice(plan.monthly.price, currencyInfo.code)}
                                 </Typography>
                               </Box>
@@ -358,13 +375,15 @@ const Plans = () => {
                                 size="small"
                                 sx={{
                                   position: 'absolute',
-                                  top: -10,
-                                  right: -5,
+                                  top: -12,
+                                  left: '50%',
+                                  transform: 'translateX(-50%)',
                                   bgcolor: theme.palette.secondary.main,
                                   color: 'white',
-                                  fontWeight: 700,
-                                  fontSize: '0.65rem',
-                                  height: 20,
+                                  fontWeight: 800,
+                                  fontSize: '0.7rem',
+                                  height: 22,
+                                  px: 1,
                                   boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
                                 }}
                               />
@@ -372,11 +391,11 @@ const Plans = () => {
                                 Yearly
                               </Typography>
                               <Box display="flex" justifyContent="center" alignItems="baseline" gap={0.5}>
-                                <Typography variant="h6" fontWeight={800} color={selectedBilling[planIndex] === 'yearly' ? "text.primary" : "text.secondary"}>
+                                <Typography variant="h4" fontWeight={900} color={selectedBilling[planIndex] === 'yearly' ? "text.primary" : "text.secondary"}>
                                   {formatPrice(plan.yearly.price, currencyInfo.code)}
                                 </Typography>
                               </Box>
-                              <Typography variant="caption" color="text.secondary" display="block" align="center" sx={{ fontWeight: 500 }}>
+                              <Typography variant="caption" color={selectedBilling[planIndex] === 'yearly' ? "#418BCA" : "text.secondary"} display="block" align="center" sx={{ fontWeight: 600 }}>
                                 {plan.yearly.period}
                               </Typography>
                             </Box>
