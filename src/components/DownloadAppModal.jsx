@@ -11,7 +11,16 @@ import {
     useTheme,
 } from '@mui/material';
 import { MdClose } from 'react-icons/md';
-import { FaApple, FaGooglePlay } from 'react-icons/fa';
+import { FaApple } from 'react-icons/fa';
+
+const GooglePlayIcon = () => (
+    <svg viewBox="0 0 512 512" width="28" height="28" style={{ marginRight: '2px' }}>
+        <path fill="#00D9FF" d="M80.3 32.4c-4.1 4.1-6.4 10.3-6.4 18.2v410.7c0 7.9 2.3 14.1 6.4 18.2l1.6 1.6L304.5 258.4v-4.8L81.9 30.8l-1.6 1.6z" />
+        <path fill="#FFC107" d="M379.2 333.3L304.5 258.4v-4.8l74.7-74.9 1.6.9 88.5 50.3c25.3 14.3 25.3 37.9 0 52.3l-88.5 50.3-1.6.9z" />
+        <path fill="#FF5252" d="M380.8 332.4L304.5 256 80.3 480.2c8.3 8.7 21.9 9.8 37.1 1.2l263.4-149z" />
+        <path fill="#00D26A" d="M380.8 179.6L117.4 30.6c-15.2-8.6-28.8-7.5-37.1 1.2L304.5 256l76.3-76.4z" />
+    </svg>
+);
 
 const DownloadAppModal = ({ open, onClose }) => {
     const theme = useTheme();
@@ -41,15 +50,15 @@ const DownloadAppModal = ({ open, onClose }) => {
                 }
             }}
         >
-            <DialogTitle sx={{ m: 0, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h6" component="div" fontWeight={700}>
-                    Download the App
-                </Typography>
+            <DialogTitle sx={{ m: 0, p: 1, display: 'flex', justifyContent: 'flex-end' }}>
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
                     sx={{
                         color: (theme) => theme.palette.grey[500],
+                        '&:hover': {
+                            color: (theme) => theme.palette.grey[700],
+                        }
                     }}
                 >
                     <MdClose />
@@ -63,49 +72,84 @@ const DownloadAppModal = ({ open, onClose }) => {
                     This feature is available exclusively on our mobile app. Download now to unlock your full athletic potential!
                 </Typography>
 
-                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, justifyContent: 'center' }}>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    gap: 3,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    mt: 2
+                }}>
+                    {/* App Store Button */}
                     <Button
-                        variant="contained"
-                        size="large"
-                        startIcon={<FaApple size={24} />}
                         onClick={handleAppStoreClick}
                         sx={{
-                            bgcolor: theme.palette.mode === 'dark' ? '#fff' : '#000',
-                            color: theme.palette.mode === 'dark' ? '#000' : '#fff',
-                            py: 1.5,
-                            px: 3,
-                            borderRadius: 2,
+                            bgcolor: '#000000',
+                            color: '#ffffff',
+                            borderRadius: '12px',
+                            border: '1px solid rgba(255,255,255,0.15)',
+                            px: 2,
+                            py: 1,
                             textTransform: 'none',
-                            fontSize: '1rem',
-                            fontWeight: 600,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1.5,
+                            width: { xs: '220px', sm: 'auto' },
+                            minWidth: '200px',
+                            transition: 'all 0.2s ease',
                             '&:hover': {
-                                bgcolor: theme.palette.mode === 'dark' ? '#e0e0e0' : '#333',
-                            },
+                                bgcolor: '#1a1a1a',
+                                borderColor: 'rgba(255,255,255,0.3)',
+                                transform: 'translateY(-2px)',
+                                boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
+                            }
                         }}
                     >
-                        Download on the App Store
+                        <FaApple size={30} style={{ marginBottom: '2px' }} />
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                            <Typography sx={{ fontSize: '0.65rem', lineHeight: 1, opacity: 0.9, fontWeight: 500 }}>
+                                Download on the
+                            </Typography>
+                            <Typography sx={{ fontSize: '1.25rem', lineHeight: 1.2, fontWeight: 600 }}>
+                                App Store
+                            </Typography>
+                        </Box>
                     </Button>
 
+                    {/* Google Play Button */}
                     <Button
-                        variant="contained"
-                        size="large"
-                        startIcon={<FaGooglePlay size={20} />}
                         onClick={handlePlayStoreClick}
                         sx={{
-                            bgcolor: theme.palette.mode === 'dark' ? '#fff' : '#000',
-                            color: theme.palette.mode === 'dark' ? '#000' : '#fff',
-                            py: 1.5,
-                            px: 3,
-                            borderRadius: 2,
+                            bgcolor: '#000000',
+                            color: '#ffffff',
+                            borderRadius: '12px',
+                            border: '1px solid rgba(255,255,255,0.15)',
+                            px: 2,
+                            py: 1,
                             textTransform: 'none',
-                            fontSize: '1rem',
-                            fontWeight: 600,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1.5,
+                            width: { xs: '220px', sm: 'auto' },
+                            minWidth: '200px',
+                            transition: 'all 0.2s ease',
                             '&:hover': {
-                                bgcolor: theme.palette.mode === 'dark' ? '#e0e0e0' : '#333',
-                            },
+                                bgcolor: '#1a1a1a',
+                                borderColor: 'rgba(255,255,255,0.3)',
+                                transform: 'translateY(-2px)',
+                                boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
+                            }
                         }}
                     >
-                        Get it on Google Play
+                        <GooglePlayIcon />
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                            <Typography sx={{ fontSize: '0.6rem', lineHeight: 1, opacity: 0.9, fontWeight: 700, letterSpacing: '0.5px' }}>
+                                GET IT ON
+                            </Typography>
+                            <Typography sx={{ fontSize: '1.25rem', lineHeight: 1.2, fontWeight: 600 }}>
+                                Google Play
+                            </Typography>
+                        </Box>
                     </Button>
                 </Box>
             </DialogContent>
