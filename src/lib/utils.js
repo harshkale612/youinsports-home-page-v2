@@ -168,21 +168,21 @@ const COUNTRY_CURRENCY_MAP = {
 
 // Currency symbols
 const CURRENCY_SYMBOLS = {
-  'INR': '₹ ',
-  'USD': '$ ',
-  'CAD': '$ ',
-  'GBP': '£',
-  'AUD': 'A$',
-  'EUR': '€',
-  'JPY': '¥',
-  'CNY': '¥',
-  'BRL': 'R$',
-  'MXN': '$',
-  'SGD': 'S$',
-  'AED': 'د.إ',
-  'SAR': '﷼',
-  'ZAR': 'R',
-  'NZD': 'NZ$',
+  'INR': 'INR ',
+  'USD': 'USD ',
+  'CAD': 'CAD ',
+  'GBP': 'GBP ',
+  'AUD': 'AUD ',
+  'EUR': 'EUR ',
+  'JPY': 'JPY ',
+  'CNY': 'CNY ',
+  'BRL': 'BRL ',
+  'MXN': 'MXN ',
+  'SGD': 'SGD ',
+  'AED': 'AED ',
+  'SAR': 'SAR ',
+  'ZAR': 'ZAR ',
+  'NZD': 'NZ ',
 };
 
 // Exchange rates relative to CAD (base currency)
@@ -280,7 +280,7 @@ export function formatPrice(price, currencyCode) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  const symbol = CURRENCY_SYMBOLS[code] || (code === 'USD' || code === 'CAD' || code === 'INR' ? '' : code);
+  const symbol = CURRENCY_SYMBOLS[code] || `${code} `;
   return `${symbol}${formattedPrice}`;
 }
 

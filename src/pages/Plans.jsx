@@ -29,7 +29,7 @@ import DownloadAppModal from '../components/DownloadAppModal';
 const Plans = () => {
   const theme = useTheme();
   const [selectedBilling, setSelectedBilling] = useState({ 0: 'yearly', 1: 'yearly' });
-  const [currencyInfo, setCurrencyInfo] = useState({ code: 'USD', symbol: '$' });
+  const [currencyInfo, setCurrencyInfo] = useState({ code: 'USD', symbol: 'USD ' });
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
 
@@ -43,7 +43,7 @@ const Plans = () => {
         setCurrencyInfo(currency);
       } catch (error) {
         console.error('Error fetching currency:', error);
-        setCurrencyInfo({ code: 'USD', symbol: '$' });
+        setCurrencyInfo({ code: 'USD', symbol: 'USD ' });
       } finally {
         setLoading(false);
       }
@@ -79,11 +79,11 @@ const Plans = () => {
           'Access to Sponsorship Program',
         ],
         yearly: {
-          price: currentPricing.basic.monthlyEq.toFixed(2),
+          price: currentPricing.basic.yearly.toFixed(2),
           totalYearly: currentPricing.basic.yearly.toFixed(2),
-          period: `billed at ${formatPrice(currentPricing.basic.yearly, currencyInfo.code)}/yr`,
+          period: '',
         },
-        buttonText: `Subscribe Now - ${formatPrice(currentPricing.basic.yearly, currencyInfo.code)} / yearly`,
+        buttonText: 'Subscribe Now',
         buttonAction: () => setOpenModal(true),
       },
       {
@@ -105,7 +105,7 @@ const Plans = () => {
           totalYearly: currentPricing.premium.yearly.toFixed(2),
           period: `billed at ${formatPrice(currentPricing.premium.yearly, currencyInfo.code)}/yr`,
         },
-        buttonText: 'Start 30-Day Free Trial',
+        buttonText: 'Subscribe Now',
         buttonAction: () => setOpenModal(true),
       },
     ];
@@ -276,23 +276,25 @@ const Plans = () => {
                             }}
                           >
 
-                            <Chip
-                              label="Save 20%"
-                              size="small"
-                              sx={{
-                                position: 'absolute',
-                                top: -12,
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                bgcolor: theme.palette.secondary.main,
-                                color: 'white',
-                                fontWeight: 800,
-                                fontSize: '0.7rem',
-                                height: 22,
-                                px: 1,
-                                boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
-                              }}
-                            />
+                            {planIndex !== 0 && (
+                              <Chip
+                                label="Save 20%"
+                                size="small"
+                                sx={{
+                                  position: 'absolute',
+                                  top: -12,
+                                  left: '50%',
+                                  transform: 'translateX(-50%)',
+                                  bgcolor: theme.palette.secondary.main,
+                                  color: 'white',
+                                  fontWeight: 800,
+                                  fontSize: '0.7rem',
+                                  height: 22,
+                                  px: 1,
+                                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+                                }}
+                              />
+                            )}
                             <Typography variant="body2" fontWeight={700} color="text.primary" mb={0.5} align="center" sx={{ textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.05em', opacity: 0.8 }}>
                               Yearly
                             </Typography>
@@ -304,9 +306,11 @@ const Plans = () => {
                               )}
                               {loading && <CircularProgress size={20} />}
                             </Box>
-                            <Typography variant="caption" color="primary.main" display="block" align="center" mt={0.5} sx={{ fontWeight: 600 }}>
-                              {plan.yearly.period}
-                            </Typography>
+                            {plan.yearly.period && (
+                              <Typography variant="caption" color="primary.main" display="block" align="center" mt={0.5} sx={{ fontWeight: 600 }}>
+                                {plan.yearly.period}
+                              </Typography>
+                            )}
                           </Box>
                         ) : (
                           <>
