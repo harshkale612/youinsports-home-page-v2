@@ -105,7 +105,7 @@ const Plans = () => {
           totalYearly: currentPricing.premium.yearly.toFixed(2),
           period: `billed at ${formatPrice(currentPricing.premium.yearly, currencyInfo.code)}/yr`,
         },
-        buttonText: 'Subscribe Now',
+        buttonText: 'Start 30-Day Free Trial',
         buttonAction: () => setOpenModal(true),
       },
     ];
