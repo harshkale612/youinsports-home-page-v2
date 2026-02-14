@@ -58,8 +58,8 @@ const Plans = () => {
       premium: { yearly: 119, monthly: 12.99, monthlyEq: 9.92 }
     },
     USD: {
-      basic: { yearly: 36, monthlyEq: 3 },
-      premium: { yearly: 89, monthly: 9.99, monthlyEq: 7.42 }
+      basic: { yearly: 48, monthlyEq: 4 },
+      premium: { yearly: 95, monthly: 9.99, monthlyEq: 7.92 }
     },
     INR: {
       basic: { yearly: 99.99, monthlyEq: 8.33 },
