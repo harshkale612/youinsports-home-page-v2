@@ -54,7 +54,7 @@ const Plans = () => {
 
   const REGIONAL_PRICING = useMemo(() => ({
     CAD: {
-      basic: { yearly: 48, monthlyEq: 4 },
+      basic: { yearly: 4.99, monthlyEq: 0.42 },
       premium: { yearly: 119, monthly: 12.99, monthlyEq: 9.92 }
     },
     USD: {
