@@ -341,7 +341,7 @@ export const PRICING_FAQ_ITEMS = [
     id: 'whats-included-premium',
     question: 'What is included in the Premium plan?',
     answer:
-      'Premium includes everything in Basic (Blue Tick Verified Profile and Access to Sponsorship Program) plus: Generate PGN with Scoresheet/Game Video, Download PGN File, Game Analysis, and Stockfish Analysis.',
+      'Premium includes everything in Basic (Blue Tick for Verified Profile and Access to Sponsorship Program) plus: Generate PGN with Scoresheet/Game Video, Download PGN File, Game Analysis, and Stockfish Analysis.',
   },
   {
     id: 'monthly-or-yearly',

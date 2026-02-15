@@ -75,7 +75,7 @@ const Plans = () => {
       {
         title: 'Basic',
         features: [
-          'Blue Tick Verified Profile',
+          'Blue Tick For Verified Profile',
           'Access to Sponsorship Program',
         ],
         yearly: {
@@ -89,7 +89,7 @@ const Plans = () => {
       {
         title: 'Premium',
         features: [
-          'Blue Tick Verified Profile',
+          'Blue Tick For Verified Profile',
           'Access to Sponsorship Program',
           'Generate PGN with Scoresheet/Game Video',
           'Download PGN File',
