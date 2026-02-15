@@ -182,7 +182,7 @@ const CURRENCY_SYMBOLS = {
   'AED': 'AED ',
   'SAR': 'SAR ',
   'ZAR': 'ZAR ',
-  'NZD': 'NZ ',
+  'NZD': 'NZD ',
 };
 
 // Exchange rates relative to CAD (base currency)
