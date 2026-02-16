@@ -227,3 +227,128 @@ export async function submitSupport(data) {
 
   return { success: true, message: "Support submitted successfully!" };
 }
+
+// Fetch pricing plans data
+export async function fetchPricingData() {
+  // DUMMY DATA - Replace with actual API call later
+  // Example: const response = await fetch(`${process.env.REACT_APP_API_URL}/api/pricing`)
+
+  console.log("Fetching pricing data");
+
+  // Simulate API delay
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  return {
+    "data": [
+      {
+        "code": "PREMIUM_V2",
+        "features": [
+          {
+            "key": "verified_badge",
+            "label": "Verification Badge"
+          },
+          {
+            "key": "sponsorship_access",
+            "label": "Access to Sponsorship Program (coming soon)"
+          },
+          {
+            "key": "dedicated_profile",
+            "label": "Dedicated profile page (coming soon)"
+          },
+          {
+            "key": "generate_pgn",
+            "label": "Generate PGN with Scoresheet/Game Video (Beta)"
+          },
+          {
+            "key": "download_pgn",
+            "label": "Download PGN File"
+          },
+          {
+            "key": "game_analysis",
+            "label": "Game Analysis"
+          },
+          {
+            "key": "stockfish_analysis",
+            "label": "Stockfish Analysis"
+          }
+        ],
+        "name": "Premium",
+        "persona": "",
+        "plan_id": 5,
+        "pricing": {
+          "CAD": {
+            "monthly": {
+              "price": 12.99
+            },
+            "yearly": {
+              "discount_percent": 20,
+              "original_price": 155.88,
+              "price": 124
+            }
+          },
+          "INR": {
+            "monthly": {
+              "price": 199.99
+            },
+            "yearly": {
+              "discount_percent": 20,
+              "original_price": 599,
+              "price": 479
+            }
+          },
+          "USD": {
+            "monthly": {
+              "price": 9.99
+            },
+            "yearly": {
+              "discount_percent": 20,
+              "original_price": 119.88,
+              "price": 95
+            }
+          }
+        },
+        "trial_days": 30
+      },
+      {
+        "code": "BASIC_V3",
+        "features": [
+          {
+            "key": "verified_badge",
+            "label": "Verification Badge"
+          },
+          {
+            "key": "sponsorship_access",
+            "label": "Access to Sponsorship Program (coming soon)"
+          },
+          {
+            "key": "dedicated_profile",
+            "label": "Dedicated profile page (coming soon)"
+          }
+        ],
+        "name": "Basic",
+        "persona": "",
+        "plan_id": 6,
+        "pricing": {
+          "CAD": {
+            "yearly": {
+              "price": 6.99
+            }
+          },
+          "INR": {
+            "yearly": {
+              "price": 99.99
+            }
+          },
+          "USD": {
+            "yearly": {
+              "price": 4.99
+            }
+          }
+        },
+        "trial_days": 0
+      }
+    ],
+    "message": "Data Retrieved Successfully",
+    "status": "success"
+  };
+}
