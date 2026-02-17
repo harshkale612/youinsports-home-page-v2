@@ -265,7 +265,7 @@ export async function fetchPricingData() {
           },
           {
             "key": "game_analysis",
-            "label": "Game Analysis"
+            "label": "AI Based Game Analysis"
           },
           {
             "key": "stockfish_analysis",
