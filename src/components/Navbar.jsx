@@ -24,8 +24,6 @@ import {
   MdVideoLibrary as VideoLibrary,
   MdSmartToy as SmartToy,
   MdPerson as Person,
-  MdOutlineWbSunny,
-  MdOutlineDarkMode,
 } from 'react-icons/md';
 import { useColorMode } from '../theme/ThemeContext';
 const logo = '/uinsports-logo.png';
@@ -37,7 +35,6 @@ const Navbar = () => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { toggleColorMode } = useColorMode();
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -83,17 +80,11 @@ const Navbar = () => {
             width: 'auto',
             display: 'block',
             objectFit: 'contain',
-            filter:
-              theme.palette.mode === 'dark'
-                ? 'drop-shadow(0 0 10px rgba(15,23,42,0.8))'
-                : 'drop-shadow(0 0 4px rgba(15,23,42,0.15))',
+            filter: 'drop-shadow(0 0 4px rgba(15,23,42,0.15))',
             transition: 'transform 0.2s ease, filter 0.2s ease',
             '&:hover': {
               transform: 'translateY(-1px) scale(1.02)',
-              filter:
-                theme.palette.mode === 'dark'
-                  ? 'drop-shadow(0 0 14px rgba(15,23,42,0.95))'
-                  : 'drop-shadow(0 0 8px rgba(15,23,42,0.25))',
+              filter: 'drop-shadow(0 0 8px rgba(15,23,42,0.25))',
             },
           }}
         />
@@ -236,9 +227,7 @@ const Navbar = () => {
         position="sticky"
         sx={{
           backdropFilter: 'blur(10px)',
-          borderBottom: theme.palette.mode === 'light'
-            ? '1px solid rgba(229, 231, 235, 0.5)'
-            : '1px solid rgba(51, 65, 85, 0.5)',
+          borderBottom: '1px solid rgba(229, 231, 235, 0.5)',
           transition: 'all 0.3s ease',
         }}
       >
@@ -254,17 +243,11 @@ const Navbar = () => {
                   width: 'auto',
                   display: 'block',
                   objectFit: 'contain',
-                  filter:
-                    theme.palette.mode === 'dark'
-                      ? 'drop-shadow(0 0 10px rgba(15,23,42,0.8))'
-                      : 'drop-shadow(0 0 4px rgba(15,23,42,0.15))',
+                  filter: 'drop-shadow(0 0 4px rgba(15,23,42,0.15))',
                   transition: 'transform 0.2s ease, filter 0.2s ease',
                   '&:hover': {
                     transform: 'translateY(-1px) scale(1.02)',
-                    filter:
-                      theme.palette.mode === 'dark'
-                        ? 'drop-shadow(0 0 14px rgba(15,23,42,0.95))'
-                        : 'drop-shadow(0 0 8px rgba(15,23,42,0.25))',
+                    filter: 'drop-shadow(0 0 8px rgba(15,23,42,0.25))',
                   },
                 }}
               />
@@ -353,41 +336,19 @@ const Navbar = () => {
                 Sign up
               </Button>
 
-              <IconButton
-                onClick={toggleColorMode}
-                sx={{
-                  ml: 1,
-                  color: theme.palette.mode === 'light' ? '#374151' : '#f1f5f9',
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    backgroundColor: theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.08)',
-                    transform: 'rotate(15deg)'
-                  }
-                }}
-                aria-label="Toggle theme"
-              >
-                {theme.palette.mode === 'dark' ? <MdOutlineWbSunny /> : <MdOutlineDarkMode />}
-              </IconButton>
+
             </Box>
           )}
 
           {isMobile && (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <IconButton
-                onClick={toggleColorMode}
-                sx={{
-                  color: theme.palette.mode === 'light' ? '#374151' : '#f1f5f9',
-                }}
-                aria-label="Toggle theme"
-              >
-                {theme.palette.mode === 'dark' ? <MdOutlineWbSunny /> : <MdOutlineDarkMode />}
-              </IconButton>
+
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
                 edge="start"
                 onClick={handleDrawerToggle}
-                sx={{ color: theme.palette.mode === 'light' ? '#374151' : '#f1f5f9' }}
+                sx={{ color: '#374151' }}
               >
                 <MenuIcon />
               </IconButton>

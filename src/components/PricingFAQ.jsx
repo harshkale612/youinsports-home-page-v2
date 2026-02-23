@@ -16,7 +16,7 @@ import { MdExpandMore } from 'react-icons/md';
 function YouTubeEmbed({ videoUrl, isVisible, theme }) {
   if (!videoUrl || !isVisible) return null;
 
-  const isDark = theme.palette.mode === 'dark';
+  const isDark = false;
   let embedSrc = videoUrl;
   if (typeof videoUrl === 'string' && videoUrl.includes('youtube')) {
     const match = videoUrl.match(/(?:embed\/|v=)([\w-]+)/);
@@ -130,9 +130,7 @@ function PricingFAQ({
           borderRadius: 4,
           border: `1px solid ${theme.palette.divider}`,
           bgcolor: theme.palette.background.paper,
-          boxShadow: theme.palette.mode === 'light'
-            ? '0 20px 40px -18px rgba(0,0,0,0.10)'
-            : '0 24px 48px -22px rgba(0,0,0,0.45)',
+          boxShadow: '0 20px 40px -18px rgba(0,0,0,0.10)',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -146,9 +144,7 @@ function PricingFAQ({
             left: '-20%',
             width: 420,
             height: 420,
-            background: theme.palette.mode === 'light'
-              ? 'radial-gradient(circle, rgba(65, 139, 202, 0.12) 0%, rgba(65, 139, 202, 0) 70%)'
-              : 'radial-gradient(circle, rgba(65, 139, 202, 0.18) 0%, rgba(65, 139, 202, 0) 70%)',
+            background: 'radial-gradient(circle, rgba(65, 139, 202, 0.12) 0%, rgba(65, 139, 202, 0) 70%)',
             filter: 'blur(40px)',
             pointerEvents: 'none',
           }}
@@ -161,9 +157,7 @@ function PricingFAQ({
             right: '-20%',
             width: 480,
             height: 480,
-            background: theme.palette.mode === 'light'
-              ? 'radial-gradient(circle, rgba(242, 106, 39, 0.12) 0%, rgba(242, 106, 39, 0) 70%)'
-              : 'radial-gradient(circle, rgba(242, 106, 39, 0.18) 0%, rgba(242, 106, 39, 0) 70%)',
+            background: 'radial-gradient(circle, rgba(242, 106, 39, 0.12) 0%, rgba(242, 106, 39, 0) 70%)',
             filter: 'blur(44px)',
             pointerEvents: 'none',
           }}
@@ -212,19 +206,15 @@ function PricingFAQ({
                     borderRadius: '14px !important',
                     mb: 1.25,
                     '&:last-of-type': { mb: 0 },
-                    bgcolor: theme.palette.mode === 'light' ? '#ffffff' : theme.palette.background.paper,
+                    bgcolor: '#ffffff',
                     overflow: 'hidden',
                     transition: 'border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease',
                     '&:hover': {
-                      borderColor: theme.palette.mode === 'light'
-                        ? 'rgba(65, 139, 202, 0.35)'
-                        : 'rgba(65, 139, 202, 0.35)',
+                      borderColor: 'rgba(65, 139, 202, 0.35)',
                     },
                     '&.Mui-expanded': {
                       borderColor: theme.palette.primary.main,
-                      boxShadow: theme.palette.mode === 'light'
-                        ? '0 10px 22px rgba(15, 23, 42, 0.08)'
-                        : '0 12px 24px rgba(0, 0, 0, 0.35)',
+                      boxShadow: '0 10px 22px rgba(15, 23, 42, 0.08)',
                     },
                   }}
                   TransitionProps={{ timeout: 220 }}
@@ -239,9 +229,7 @@ function PricingFAQ({
                           placeItems: 'center',
                           borderRadius: '10px',
                           border: `1px solid ${theme.palette.divider}`,
-                          bgcolor: isExpanded
-                            ? (theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.10)' : 'rgba(65, 139, 202, 0.18)')
-                            : 'transparent',
+                          bgcolor: isExpanded ? 'rgba(65, 139, 202, 0.10)' : 'transparent',
                           transition: 'all 0.2s ease',
                         }}
                       >

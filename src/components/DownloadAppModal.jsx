@@ -46,7 +46,7 @@ const DownloadAppModal = ({ open, onClose }) => {
                     borderRadius: 3,
                     bgcolor: theme.palette.background.paper,
                     backgroundImage: 'none',
-                    boxShadow: theme.palette.mode === 'dark' ? '0 8px 32px rgba(0,0,0,0.4)' : '0 8px 32px rgba(0,0,0,0.1)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
                 }
             }}
         >

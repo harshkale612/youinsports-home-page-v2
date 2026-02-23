@@ -178,9 +178,7 @@ const Plans = () => {
               sx={{
                 fontSize: { xs: '2.5rem', md: '3.5rem' },
                 fontWeight: 800,
-                background: theme.palette.mode === 'dark'
-                  ? 'linear-gradient(45deg, #FFFFFF 30%, #418BCA 90%)'
-                  : 'linear-gradient(45deg, #0C3042 30%, #418BCA 90%)',
+                background: 'linear-gradient(45deg, #0C3042 30%, #418BCA 90%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 mb: 2,
@@ -197,9 +195,7 @@ const Plans = () => {
                 mb: 6,
                 fontWeight: 500,
                 color: '#F26A27',
-                textShadow: theme.palette.mode === 'dark'
-                  ? '0 0 20px rgba(242, 106, 39, 0.3)'
-                  : 'none'
+                textShadow: 'none'
               }}
             >
               Unlock your full athletic potential.
@@ -236,21 +232,15 @@ const Plans = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         position: 'relative',
-                        bgcolor: theme.palette.mode === 'light' ? '#ffffff' : '#151e32',
-                        border: theme.palette.mode === 'light'
-                          ? '1px solid rgba(0,0,0,0.06)'
-                          : '1px solid rgba(255,255,255,0.08)',
+                        bgcolor: '#ffffff',
+                        border: '1px solid rgba(0,0,0,0.06)',
                         minHeight: { xs: 'auto', md: '600px' },
                         borderRadius: '24px',
-                        boxShadow: theme.palette.mode === 'light'
-                          ? '0 20px 40px -10px rgba(0,0,0,0.06)'
-                          : '0 20px 40px -10px rgba(0,0,0,0.3)',
+                        boxShadow: '0 20px 40px -10px rgba(0,0,0,0.06)',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         '&:hover': {
-                          boxShadow: theme.palette.mode === 'light'
-                            ? '0 30px 60px -12px rgba(65, 139, 202, 0.15)'
-                            : '0 30px 60px -12px rgba(65, 139, 202, 0.15)',
-                          borderColor: theme.palette.mode === 'dark' ? 'rgba(65, 139, 202, 0.3)' : 'transparent',
+                          boxShadow: '0 30px 60px -12px rgba(65, 139, 202, 0.15)',
+                          borderColor: 'transparent',
                         }
                       }}
                     >
@@ -298,7 +288,7 @@ const Plans = () => {
                                 p: 2.5,
                                 borderRadius: '16px',
                                 border: '2px solid #418BCA',
-                                bgcolor: theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.04)' : 'rgba(65, 139, 202, 0.08)',
+                                bgcolor: 'rgba(65, 139, 202, 0.04)',
                                 position: 'relative',
                               }}
                             >
@@ -353,13 +343,13 @@ const Plans = () => {
                                     : theme.palette.divider
                                     }`,
                                   bgcolor: selectedBilling[planIndex] === 'monthly'
-                                    ? (theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.04)' : 'rgba(242, 106, 39, 0.08)')
+                                    ? 'rgba(242, 106, 39, 0.04)'
                                     : 'transparent',
                                   cursor: 'pointer',
                                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                                   '&:hover': {
                                     borderColor: theme.palette.secondary.main,
-                                    bgcolor: theme.palette.mode === 'light' ? 'rgba(242, 106, 39, 0.04)' : 'rgba(242, 106, 39, 0.08)',
+                                    bgcolor: 'rgba(242, 106, 39, 0.04)',
                                     transform: 'translateY(-2px)'
                                   },
                                 }}
@@ -389,14 +379,14 @@ const Plans = () => {
                                     : theme.palette.divider
                                     }`,
                                   bgcolor: selectedBilling[planIndex] === 'yearly'
-                                    ? (theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.04)' : 'rgba(65, 139, 202, 0.08)')
+                                    ? 'rgba(65, 139, 202, 0.04)'
                                     : 'transparent',
                                   cursor: 'pointer',
                                   position: 'relative',
                                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                                   '&:hover': {
                                     borderColor: '#418BCA',
-                                    bgcolor: theme.palette.mode === 'light' ? 'rgba(65, 139, 202, 0.04)' : 'rgba(65, 139, 202, 0.08)',
+                                    bgcolor: 'rgba(65, 139, 202, 0.04)',
                                     transform: 'translateY(-2px)'
                                   },
                                 }}
