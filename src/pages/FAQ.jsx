@@ -178,7 +178,7 @@ export default function FAQ() {
           mb: 1,
           position: "relative",
           paddingTop: "56.25%",
-          borderRadius: 3,
+          borderRadius: 1,
           overflow: "hidden",
           boxShadow: "0 10px 30px -10px rgba(65,139,202,0.2)",
           border: "1px solid rgba(65,139,202,0.15)",

@@ -121,7 +121,6 @@ const Plans = () => {
           // premium: { yearly: 95, monthly: 9.99, monthlyEq: 7.92 }
           // yearly display used: price: monthlyEq
 
-          price: (premiumYearly.price / 12).toFixed(2),
           totalYearly: premiumYearly.price.toFixed(2),
           period: `billed at ${formatPrice(premiumYearly.price, currencyInfo.code)}/yr`,
         } : null,
